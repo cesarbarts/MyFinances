@@ -9,7 +9,7 @@ export default function HomeView() {
 
   return (
     <View>
-      <Text>Cadastre Financa</Text>
+      <Text>Inicio</Text>
 
       <Button
         title="Cadastrar"
