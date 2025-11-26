@@ -8,10 +8,23 @@ import {
   TextInput,
 } from 'react-native';
 
+import firestore, { firebase } from "@react-native-firebase/firestore"
+
 export default function CadastrarFinancaView() {
   const [lucro, setLucro] = useState(true);
 
   const [valor, setValor] = useState(0.0);
+
+  function definirValor(valorDigitado) {
+    setValor(Math.abs(valorDigitado));
+  }
+
+  async function enviarFirebase(){
+    const response = await firestore().collection('financas').add({
+        valor: lucro? valor: -valor
+    })
+    console.log(response)
+  }
 
   return (
     <View style={estilos.main}>
@@ -21,7 +34,7 @@ export default function CadastrarFinancaView() {
         value={valor}
         style={estilos.entrada}
         keyboardType="numeric"
-        onChangeText={setValor}
+        onChangeText={value => definirValor(value)}
       />
 
       <View style={estilos.botoes}>
@@ -37,9 +50,10 @@ export default function CadastrarFinancaView() {
           </View>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity>
+      <Text>Valor digitado: R${valor.toFixed(2)}</Text>
+      <TouchableOpacity onPress={()=>enviarFirebase()}>
         <View>
-            <Text>Enviar</Text>
+          <Text>Enviar</Text>
         </View>
       </TouchableOpacity>
     </View>
