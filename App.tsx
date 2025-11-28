@@ -4,6 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import CadastrarFinancaView from "./src/screens/CadastrarFinanca"
 import HomeView from "./src/screens/Home"
+import EditarFinancasView from "./src/screens/EditarFinanca"
 
 export default function App() {
     
@@ -11,9 +12,12 @@ export default function App() {
 
 
     return <NavigationContainer>
-        <Stack.Navigator screenOptions={{headerShown: false}}>
+        <Stack.Navigator screenOptions={{headerStyle:{
+            shadowOpacity: 0,
+        }}}>
             <Stack.Screen name='Home' component={HomeView}></Stack.Screen>
             <Stack.Screen name='CadastrarFinanca' component={CadastrarFinancaView}></Stack.Screen>
+            <Stack.Screen name='EditarFinanca' component={EditarFinancasView}></Stack.Screen>
         </Stack.Navigator>
     </NavigationContainer>
 }

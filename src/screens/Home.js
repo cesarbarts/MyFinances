@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from 'react';
 
-import { View, Text, Button, FlatList, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  Button,
+  FlatList,
+  StyleSheet,
+  ScrollView,
+} from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 
@@ -42,18 +49,56 @@ export default function HomeView() {
 
   return (
     <View style={estilos.geral}>
-      <View
-        style={[
-          estilos.first,
-          {
-            backgroundColor: soma > 0 ? '#26ab91ff' : '#c74242ff',
-          },
-        ]}
-      >
-        <Text style={estilos.firstLabel}>Soma</Text>
-        <Text style={estilos.firstText}>
-          R${soma.toFixed(2).replace('.', ',')}
-        </Text>
+      <View style={estilos.first}>
+        <ScrollView horizontal={true} decelerationRate="fast" snapToOffsets={[0,410,820]}>
+          <View style={{ width: 1230, flexDirection: 'row' }}>
+            <View
+              style={[
+                {
+                  flex: 1,
+                  backgroundColor: soma > 0 ? '#26ab91ff' : '#c74242ff',
+                  justifyContent: 'flex-end',
+                  padding: 20,
+                },
+              ]}
+            >
+              <Text style={estilos.firstLabel}>Soma</Text>
+              <Text style={estilos.firstText}>
+                R${soma.toFixed(2).replace('.', ',')}
+              </Text>
+            </View>
+            <View
+              style={[
+                {
+                  flex: 1,
+                  backgroundColor: soma > 0 ? '#c74242ff' : '#c74242ff',
+                  justifyContent: 'flex-end',
+                  padding: 20,
+                },
+              ]}
+            >
+              <Text style={estilos.firstLabel}>Soma</Text>
+              <Text style={estilos.firstText}>
+                R${soma.toFixed(2).replace('.', ',')}
+              </Text>
+            </View>
+            <View
+              style={[
+                {
+                  flex: 1,
+                  backgroundColor: soma > 0 ? '#26ab91ff' : '#c74242ff',
+                  justifyContent: 'flex-end',
+                  padding: 20,
+                },
+              ]}
+            >
+              <Text style={estilos.firstLabel}>Soma</Text>
+              <Text style={estilos.firstText}>
+                R${soma.toFixed(2).replace('.', ',')}
+              </Text>
+            </View>
+          </View>
+        </ScrollView>
       </View>
 
       <View style={estilos.second}>
@@ -78,13 +123,11 @@ const estilos = StyleSheet.create({
   },
   first: {
     flex: 0.3,
-    justifyContent: 'flex-end',
-    padding: 20,
   },
   second: {
     backgroundColor: '#e9f2efff',
     flex: 0.7,
-    padding: 20,
+    paddingTop: 20
   },
   firstText: {
     color: '#fff',
