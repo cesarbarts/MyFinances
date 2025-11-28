@@ -50,7 +50,11 @@ export default function HomeView() {
   return (
     <View style={estilos.geral}>
       <View style={estilos.first}>
-        <ScrollView horizontal={true} decelerationRate="fast" snapToOffsets={[0,410,820]}>
+        <ScrollView
+          horizontal={true}
+          decelerationRate="fast"
+          snapToOffsets={[0, 410, 820]}
+        >
           <View style={{ width: 1230, flexDirection: 'row' }}>
             <View
               style={[
@@ -64,7 +68,7 @@ export default function HomeView() {
             >
               <Text style={estilos.firstLabel}>Soma</Text>
               <Text style={estilos.firstText}>
-                R${soma.toFixed(2).replace('.', ',')}
+                R${Number(soma).toFixed(2).replace('.', ',')}
               </Text>
             </View>
             <View
@@ -105,7 +109,7 @@ export default function HomeView() {
         <FlatList
           data={financas}
           renderItem={({ item }) => (
-            <CardTransacao itemRecebido={item.data()} />
+            <CardTransacao idItem={item.id} itemRecebido={item.data()} />
           )}
         ></FlatList>
         <Button
@@ -127,7 +131,7 @@ const estilos = StyleSheet.create({
   second: {
     backgroundColor: '#e9f2efff',
     flex: 0.7,
-    paddingTop: 20
+    paddingTop: 20,
   },
   firstText: {
     color: '#fff',

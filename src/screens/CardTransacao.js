@@ -2,11 +2,11 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-export default function CardTransacao({ itemRecebido }) {
+export default function CardTransacao({ itemRecebido, idItem }) {
     const navegacao = useNavigation()
   return (
     <View style={estilos.valor}>
-      <TouchableOpacity onPress={()=>navegacao.navigate('EditarFinanca', {itemSelecionado: itemRecebido})}>
+      <TouchableOpacity onPress={()=>navegacao.navigate('EditarFinanca', {itemSelecionado: itemRecebido, idItem: idItem})}>
         <View style={estilos.innerValor}>
           <Text style={estilos.rotulo}>{itemRecebido.nome}</Text>
           <Text

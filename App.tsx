@@ -14,7 +14,8 @@ export default function App() {
     return <NavigationContainer>
         <Stack.Navigator screenOptions={{headerStyle:{
             shadowOpacity: 0,
-        }}}>
+            
+        }, headerShown: false}}>
             <Stack.Screen name='Home' component={HomeView}></Stack.Screen>
             <Stack.Screen name='CadastrarFinanca' component={CadastrarFinancaView}></Stack.Screen>
             <Stack.Screen name='EditarFinanca' component={EditarFinancasView}></Stack.Screen>
