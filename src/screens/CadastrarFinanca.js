@@ -8,12 +8,15 @@ import {
   TextInput,
 } from 'react-native';
 
+import { useNavigation } from '@react-navigation/native';
 import firestore, { firebase } from "@react-native-firebase/firestore"
 
 export default function CadastrarFinancaView() {
   const [lucro, setLucro] = useState(true);
 
   const [valor, setValor] = useState(0.0);
+
+  const navegacao = useNavigation()
 
   function definirValor(valorDigitado) {
     setValor(Math.abs(valorDigitado));
@@ -54,6 +57,11 @@ export default function CadastrarFinancaView() {
       <TouchableOpacity onPress={()=>enviarFirebase()}>
         <View>
           <Text>Enviar</Text>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={()=>navegacao.goBack()}>
+        <View>
+          <Text>Voltar</Text>
         </View>
       </TouchableOpacity>
     </View>
