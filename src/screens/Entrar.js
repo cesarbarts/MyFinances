@@ -65,18 +65,12 @@ export default function EntrarView({ funcaoSetUser }) {
       </View>
 
       <View style={estilos.areabtn}>
-        <TouchableOpacity
-          disabled={false}
-          onPress={cadastrar}
-        >
+        <TouchableOpacity disabled={false} onPress={cadastrar}>
           <View style={estilos.selecao}>
             <Text style={[estilos.texto18, { color: '#fff' }]}>Cadastrar</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity
-          disabled={false}
-          onPress={login}
-        >
+        <TouchableOpacity disabled={false} onPress={login}>
           <View style={estilos.naoselecao}>
             <Text style={[estilos.texto18]}>Entrar</Text>
           </View>

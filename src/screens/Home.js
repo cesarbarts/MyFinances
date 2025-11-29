@@ -9,6 +9,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Modal,
+  ActivityIndicator
 } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
@@ -23,7 +24,9 @@ import CardTransacao from './CardTransacao';
 
 import { Calendar } from 'react-native-calendars';
 
+
 export default function HomeView() {
+    const [loading, setLoading] = useState(true)
   const [modal, setModal] = useState(false);
   const navegacao = useNavigation();
 
@@ -31,6 +34,10 @@ export default function HomeView() {
   const [daySelec, setDaySelec] = useState(0);
 
   const [soma, setSoma] = useState(0.0);
+
+  useEffect(() => {
+    setDaySelec(new Date().setHours(0, 0, 0, 0));
+  }, []);
 
   useFocusEffect(
     useCallback(() => {
@@ -52,12 +59,19 @@ export default function HomeView() {
             });
 
             setSoma(total);
+            setLoading(false)
           });
       }
 
       obterFinancas();
     }, [daySelec]),
   );
+
+  
+
+  if(loading) {
+    return <View style={[estilos.second, estilos.geral, {justifyContent: "center", alignItems: "center"}]}><ActivityIndicator size={30} color={'#26ab91ff'}></ActivityIndicator></View>
+  }
 
   return (
     <View style={estilos.geral}>
@@ -120,12 +134,14 @@ export default function HomeView() {
       <View style={estilos.second}>
         <View>
           <TouchableOpacity onPress={() => setModal(true)}>
-          <View>
-            <View style={estilos.btnBack}>
-                      <Text style={[estilos.btnText, estilos.texto18]}>☰ Filtrar - {new Date(daySelec).getUTCDate() + "/" + new Date(daySelec).getUTCMonth()}</Text>
-                    </View>
-          </View>
-        </TouchableOpacity>
+            <View>
+              <View style={estilos.btnBack}>
+                <Text style={[estilos.btnText, estilos.texto18]}>
+                  ☰ Filtrar - {daySelec}
+                </Text>
+              </View>
+            </View>
+          </TouchableOpacity>
         </View>
         <FlatList
           data={financas}
@@ -133,7 +149,7 @@ export default function HomeView() {
             <CardTransacao idItem={item.id} itemRecebido={item.data()} />
           )}
         ></FlatList>
-        
+
         <Button
           title="Cadastrar"
           onPress={() => navegacao.navigate('CadastrarFinanca')}
@@ -162,7 +178,7 @@ export default function HomeView() {
             <Text>Filtrar </Text>
             <Calendar
               onDayPress={day => {
-                setDaySelec(day.timestamp+1);
+                setDaySelec(day.timestamp + 1);
                 setModal(false);
               }}
               markedDates={{
@@ -210,7 +226,7 @@ const estilos = StyleSheet.create({
   },
   btnText: {
     color: '#26ab91ff',
-    fontWeight: "bold",
-    textTransform: "uppercase"
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
   },
 });
