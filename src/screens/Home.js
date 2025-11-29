@@ -7,10 +7,12 @@ import {
   FlatList,
   StyleSheet,
   ScrollView,
+  TouchableOpacity,
+  Modal,
 } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
-
+import { Filter } from '@react-native-firebase/firestore';
 import firestore from '@react-native-firebase/firestore';
 
 import { useFocusEffect } from '@react-navigation/native';
@@ -19,10 +21,14 @@ import { useCallback } from 'react';
 
 import CardTransacao from './CardTransacao';
 
+import { Calendar } from 'react-native-calendars';
+
 export default function HomeView() {
+  const [modal, setModal] = useState(false);
   const navegacao = useNavigation();
 
   const [financas, setFinancas] = useState([]);
+  const [daySelec, setDaySelec] = useState(0);
 
   const [soma, setSoma] = useState(0.0);
 
@@ -31,6 +37,12 @@ export default function HomeView() {
       async function obterFinancas() {
         await firestore()
           .collection('financas')
+          .where(
+            Filter.and(
+              Filter('data', '<', daySelec + 86400000),
+              Filter('data', '>=', daySelec),
+            ),
+          )
           .get()
           .then(financasObtidas => {
             setFinancas(financasObtidas.docs);
@@ -44,7 +56,7 @@ export default function HomeView() {
       }
 
       obterFinancas();
-    }, []),
+    }, [daySelec]),
   );
 
   return (
@@ -106,17 +118,64 @@ export default function HomeView() {
       </View>
 
       <View style={estilos.second}>
+        <View>
+          <TouchableOpacity onPress={() => setModal(true)}>
+          <View>
+            <View style={estilos.btnBack}>
+                      <Text style={[estilos.btnText, estilos.texto18]}>☰ Filtrar - {new Date(daySelec).getUTCDate() + "/" + new Date(daySelec).getUTCMonth()}</Text>
+                    </View>
+          </View>
+        </TouchableOpacity>
+        </View>
         <FlatList
           data={financas}
           renderItem={({ item }) => (
             <CardTransacao idItem={item.id} itemRecebido={item.data()} />
           )}
         ></FlatList>
+        
         <Button
           title="Cadastrar"
           onPress={() => navegacao.navigate('CadastrarFinanca')}
         ></Button>
       </View>
+      <Modal transparent={true} visible={modal} animationType={'slide'}>
+        <View style={{ flex: 1, justifyContent: 'flex-end' }}>
+          <TouchableOpacity
+            onPress={() => setModal(false)}
+            style={{ flex: 0.5 }}
+          >
+            <View style={{ backgroundColor: '#ffffff00', flex: 1 }}></View>
+          </TouchableOpacity>
+          <View
+            style={{
+              backgroundColor: '#fff',
+              flex: 0.5,
+              borderRadius: 20,
+              marginHorizontal: 10,
+              shadowColor: '#000',
+              shadowRadius: 10,
+              shadowOpacity: 0.2,
+              padding: 20,
+            }}
+          >
+            <Text>Filtrar </Text>
+            <Calendar
+              onDayPress={day => {
+                setDaySelec(day.timestamp+1);
+                setModal(false);
+              }}
+              markedDates={{
+                [daySelec]: {
+                  selected: true,
+                  disableTouchEvent: true,
+                  selectedDotColor: 'orange',
+                },
+              }}
+            />
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -141,5 +200,17 @@ const estilos = StyleSheet.create({
   firstLabel: {
     color: '#ffffff',
     textTransform: 'uppercase',
+  },
+  texto18: {
+    fontSize: 16,
+  },
+  btnBack: {
+    backgroundColor: '#383e5500',
+    margin: 20,
+  },
+  btnText: {
+    color: '#26ab91ff',
+    fontWeight: "bold",
+    textTransform: "uppercase"
   },
 });

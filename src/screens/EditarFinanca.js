@@ -91,7 +91,7 @@ export default function EditarFinancasView({ route }) {
       </View>
 
       <Button
-        disabled={disabled}
+        disabled={!disabled}
         title="Finalizar"
         onPress={() => acao()}
       ></Button>
