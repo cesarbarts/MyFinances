@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import {
   View,
@@ -9,11 +9,11 @@ import {
   ScrollView,
   TouchableOpacity,
   Modal,
-  ActivityIndicator
+  ActivityIndicator,
 } from 'react-native';
-
+import Feather from '@react-native-vector-icons/feather';
 import { useNavigation } from '@react-navigation/native';
-import { Filter } from '@react-native-firebase/firestore';
+import { Filter, queryEqual } from '@react-native-firebase/firestore';
 import firestore from '@react-native-firebase/firestore';
 
 import { useFocusEffect } from '@react-navigation/native';
@@ -22,22 +22,75 @@ import { useCallback } from 'react';
 
 import CardTransacao from './CardTransacao';
 
-import { Calendar } from 'react-native-calendars';
+import { Calendar, LocaleConfig } from 'react-native-calendars';
 
+import auth from '@react-native-firebase/auth';
+
+LocaleConfig.locales['br'] = {
+  monthNames: [
+    'Janeiro',
+    'Fevereiro',
+    'Março',
+    'Abril',
+    'Maio',
+    'Junho',
+    'Julho',
+    'Agosto',
+    'Setembro',
+    'Outubro',
+    'Novembro',
+    'Dezembro',
+  ],
+  monthNamesShort: [
+    'Jan.',
+    'Fev.',
+    'Mar',
+    'Abr',
+    'Mai',
+    'Jun',
+    'Jul.',
+    'Ago',
+    'Set.',
+    'Out.',
+    'Nov.',
+    'Déc.',
+  ],
+  dayNames: [
+    'Domingo',
+    'Segunda-feira',
+    'Terça-feira',
+    'Quarta-feira',
+    'Quinta-feira',
+    'Sexta-feira',
+    'Sábado',
+  ],
+  dayNamesShort: ['Dom.', 'Seg.', 'Ter.', 'Qua.', 'Qui.', 'Sex.', 'Sáb.'],
+  today: 'Hoje',
+};
+
+LocaleConfig.defaultLocale = 'br';
 
 export default function HomeView() {
-    const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
   const [modal, setModal] = useState(false);
   const navegacao = useNavigation();
-
   const [financas, setFinancas] = useState([]);
-  const [daySelec, setDaySelec] = useState(0);
-
+  const [daySelec, setDaySelec] = useState(new Date().setHours(0, 0, 0, 0));
   const [soma, setSoma] = useState(0.0);
+  const [idUser, setIdUser] = useState(String(auth().currentUser.uid));
 
-  useEffect(() => {
-    setDaySelec(new Date().setHours(0, 0, 0, 0));
-  }, []);
+  function formataData(data, tipo) {
+    const date = new Date(data);
+    const year = date.getUTCFullYear();
+    const month = date.getUTCMonth() + 1; //datas são indexadas
+    const day = date.getUTCDate();
+
+    if (tipo == 1) {
+      return `${day}/${month}/${year}`;
+    }
+
+    return `${year}-${month}-${day}`;
+  }
 
   useFocusEffect(
     useCallback(() => {
@@ -48,6 +101,7 @@ export default function HomeView() {
             Filter.and(
               Filter('data', '<', daySelec + 86400000),
               Filter('data', '>=', daySelec),
+              Filter('idUser', '==', idUser),
             ),
           )
           .get()
@@ -59,18 +113,25 @@ export default function HomeView() {
             });
 
             setSoma(total);
-            setLoading(false)
+            setLoading(false);
           });
       }
-
       obterFinancas();
     }, [daySelec]),
   );
 
-  
-
-  if(loading) {
-    return <View style={[estilos.second, estilos.geral, {justifyContent: "center", alignItems: "center"}]}><ActivityIndicator size={30} color={'#26ab91ff'}></ActivityIndicator></View>
+  if (loading) {
+    return (
+      <View
+        style={[
+          estilos.second,
+          estilos.geral,
+          { justifyContent: 'center', alignItems: 'center' },
+        ]}
+      >
+        <ActivityIndicator size={30} color={'#26ab91ff'}></ActivityIndicator>
+      </View>
+    );
   }
 
   return (
@@ -135,9 +196,10 @@ export default function HomeView() {
         <View>
           <TouchableOpacity onPress={() => setModal(true)}>
             <View>
-              <View style={estilos.btnBack}>
+              <View style={[estilos.btnBack, {flexDirection: "row", alignItems: "center", gap: 2}]}>
+                <Feather name="filter" size={18} color="#26ab91ff"></Feather>
                 <Text style={[estilos.btnText, estilos.texto18]}>
-                  ☰ Filtrar - {daySelec}
+                  Filtrar - {formataData(daySelec, 1)}
                 </Text>
               </View>
             </View>
@@ -150,10 +212,26 @@ export default function HomeView() {
           )}
         ></FlatList>
 
-        <Button
-          title="Cadastrar"
-          onPress={() => navegacao.navigate('CadastrarFinanca')}
-        ></Button>
+        <TouchableOpacity
+          disabled={false}
+          onPress={() =>
+            navegacao.navigate('EditarFinanca', {
+              itemSelecionado: '',
+              idItem: '',
+            })
+          }
+        >
+          <View
+            style={[
+              estilos.selecao,
+              estilos.btnSubmit,
+              { flexDirection: 'row', alignItems: 'center', gap: 2 },
+            ]}
+          >
+            <Feather name="plus" size={18} color="#fff"></Feather>
+            <Text style={[estilos.texto18, { color: '#fff' }]}>Novo</Text>
+          </View>
+        </TouchableOpacity>
       </View>
       <Modal transparent={true} visible={modal} animationType={'slide'}>
         <View style={{ flex: 1, justifyContent: 'flex-end' }}>
@@ -175,14 +253,20 @@ export default function HomeView() {
               padding: 20,
             }}
           >
-            <Text>Filtrar </Text>
             <Calendar
+            
+              theme={{
+                selectedDayBackgroundColor: '#26ab91ff',
+                selectedDayTextColor: '#ffffff',
+                todayTextColor: '#26ab91ff',
+                arrowColor: "#26ab91ff"
+              }}
               onDayPress={day => {
                 setDaySelec(day.timestamp + 1);
                 setModal(false);
               }}
               markedDates={{
-                [daySelec]: {
+                [formataData(daySelec, 2)]: {
                   selected: true,
                   disableTouchEvent: true,
                   selectedDotColor: 'orange',
@@ -199,12 +283,12 @@ export default function HomeView() {
 const estilos = StyleSheet.create({
   geral: {
     flex: 1,
+    backgroundColor: '#e9f2efff',
   },
   first: {
     flex: 0.3,
   },
   second: {
-    backgroundColor: '#e9f2efff',
     flex: 0.7,
     paddingTop: 20,
   },
@@ -218,7 +302,7 @@ const estilos = StyleSheet.create({
     textTransform: 'uppercase',
   },
   texto18: {
-    fontSize: 16,
+    fontSize: 18,
   },
   btnBack: {
     backgroundColor: '#383e5500',
@@ -228,5 +312,14 @@ const estilos = StyleSheet.create({
     color: '#26ab91ff',
     fontWeight: 'bold',
     textTransform: 'uppercase',
+  },
+  selecao: {
+    padding: 20,
+    backgroundColor: '#3bb898ff',
+    borderRadius: 20,
+    margin: 20,
+  },
+  btnSubmit: {
+    backgroundColor: '#3b8cb8ff',
   },
 });

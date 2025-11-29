@@ -17,7 +17,7 @@ export default function StackTabs() {
         headerShown: false,
       }}
     >
-      <Stack.Screen name="Home" component={HomeView}></Stack.Screen>
+      <Stack.Screen name="Inicio" component={HomeView}></Stack.Screen>
       <Stack.Screen
         name="CadastrarFinanca"
         component={CadastrarFinancaView}

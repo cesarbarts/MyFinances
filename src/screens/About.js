@@ -1,34 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import {
   View,
   Text,
-  Button,
-  FlatList,
   StyleSheet,
-  ScrollView,
   TouchableOpacity,
-  Modal,
-  Alert,
 } from 'react-native';
-
-import { useNavigation } from '@react-navigation/native';
-import { Filter } from '@react-native-firebase/firestore';
-import firestore from '@react-native-firebase/firestore';
-
-import { useFocusEffect } from '@react-navigation/native';
-
-import { useCallback } from 'react';
-
-import CardTransacao from './CardTransacao';
-
-import { Calendar } from 'react-native-calendars';
+import Feather from '@react-native-vector-icons/feather';
 
 import auth from '@react-native-firebase/auth';
 
 export default function About() {
-  
-
   function sair() {
     auth().signOut();
   }
@@ -36,12 +18,7 @@ export default function About() {
   return (
     <View style={estilos.geral}>
       <View style={estilos.first}>
-        <ScrollView
-          horizontal={true}
-          decelerationRate="fast"
-          snapToOffsets={[0, 410, 820]}
-        >
-          <View style={{ width: 1230, flexDirection: 'row' }}>
+          
             <View
               style={[
                 {
@@ -57,48 +34,22 @@ export default function About() {
                 {auth().currentUser.email}
               </Text>
             </View>
-            <View
-              style={[
-                {
-                  flex: 1,
-                  backgroundColor: '#c74242ff',
-                  justifyContent: 'flex-end',
-                  padding: 20,
-                },
-              ]}
-            >
-              <Text style={estilos.firstLabel}>Soma</Text>
-              <Text style={estilos.firstText}>
-                R$0
-              </Text>
-            </View>
-            <View
-              style={[
-                {
-                  flex: 1,
-                  backgroundColor: '#26ab91ff',
-                  justifyContent: 'flex-end',
-                  padding: 20,
-                },
-              ]}
-            >
-              <Text style={estilos.firstLabel}>Soma</Text>
-              <Text style={estilos.firstText}>
-                R$0
-              </Text>
-            </View>
-          </View>
-        </ScrollView>
       </View>
 
       <View style={estilos.second}>
-        
-       
-
-       
-        <Button title="Sair" onPress={sair}></Button>
+        <TouchableOpacity disabled={false} onPress={sair}>
+          <View
+            style={[
+              estilos.selecao,
+              estilos.btnSubmit,
+              { flexDirection: 'row', alignItems: 'center', gap: 2 },
+            ]}
+          >
+            <Feather name="log-out" size={18} color="#fff"></Feather>
+            <Text style={[estilos.texto18, { color: '#fff' }]}>Sair</Text>
+          </View>
+        </TouchableOpacity>
       </View>
-   
     </View>
   );
 }
@@ -125,7 +76,7 @@ const estilos = StyleSheet.create({
     textTransform: 'uppercase',
   },
   texto18: {
-    fontSize: 16,
+    fontSize: 18,
   },
   btnBack: {
     backgroundColor: '#383e5500',
@@ -135,5 +86,14 @@ const estilos = StyleSheet.create({
     color: '#26ab91ff',
     fontWeight: 'bold',
     textTransform: 'uppercase',
+  },
+  selecao: {
+    padding: 20,
+    backgroundColor: '#3bb898ff',
+    borderRadius: 20,
+    margin: 20,
+  },
+  btnSubmit: {
+    backgroundColor: '#3b8cb8ff',
   },
 });

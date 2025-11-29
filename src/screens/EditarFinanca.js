@@ -1,21 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
-  Button,
   TextInput,
   TouchableOpacity,
   StyleSheet,
+  Alert,
 } from 'react-native';
+import Feather from '@react-native-vector-icons/feather';
 import { useNavigation } from '@react-navigation/native';
 import { useLayoutEffect } from 'react';
 import firestore from '@react-native-firebase/firestore';
-
+import auth from '@react-native-firebase/auth';
 export default function EditarFinancasView({ route }) {
   const navegacao = useNavigation();
   const { itemSelecionado, idItem } = route.params;
-  const [valor, setValor] = useState(Math.abs(itemSelecionado.valor));
-  const [nome, setNome] = useState(itemSelecionado.nome);
+  const [valor, setValor] = useState(
+    Math.abs(itemSelecionado ? itemSelecionado.valor : ''),
+  );
+  const [nome, setNome] = useState(itemSelecionado ? itemSelecionado.nome : '');
   const [lucro, setLucro] = useState(true);
   const [disabled, setDisabled] = useState(true);
 
@@ -28,7 +31,7 @@ export default function EditarFinancasView({ route }) {
     if (valor !== '' && nome !== '') {
       itemSelecionado ? editar() : cadastrar();
     } else {
-      alert('vazio!');
+      Alert.alert('Erro', 'Valor e título precisam ser preenchidos.');
     }
   }
 
@@ -46,21 +49,40 @@ export default function EditarFinancasView({ route }) {
       });
   }
 
-  function cadastrar() {
-    alert('cadastrando!');
+  async function cadastrar() {
+    await firestore()
+      .collection('financas')
+      .add({
+        valor: lucro ? Math.abs(Number(valor)) : -Math.abs(Number(valor)),
+        nome: nome,
+        data: Date.now(),
+        idUser: auth().currentUser.uid,
+      })
+      .then(() => navegacao.goBack());
   }
 
   return (
     <View style={estilos.main}>
       <TouchableOpacity onPress={() => navegacao.goBack()}>
-        <View style={estilos.btnBack}>
-          <Text style={[estilos.btnText, estilos.texto18]}>&larr; Voltar</Text>
+        <View
+          style={[
+            estilos.btnBack,
+            { flexDirection: 'row', gap: 2, alignItems: 'center' },
+          ]}
+        >
+          <Feather name="arrow-left" size={18} color="#fff"></Feather>
+          <Text style={[estilos.btnText, estilos.texto18, { color: '#fff' }]}>
+            Voltar
+          </Text>
         </View>
       </TouchableOpacity>
+
       <Text style={estilos.muted}>
-        Última edição em {new Date(itemSelecionado.data).toLocaleDateString()}
+        {itemSelecionado
+          ? 'Última edição em ' +
+            new Date(itemSelecionado.data).toLocaleDateString()
+          : 'Nova finança'}
       </Text>
-      <Text style={estilos.titulo}>{itemSelecionado.nome}</Text>
 
       <View style={estilos.editingField}>
         <Text style={estilos.rotulo}>Valor</Text>
@@ -79,22 +101,55 @@ export default function EditarFinancasView({ route }) {
 
       <View style={estilos.areabtn}>
         <TouchableOpacity disabled={lucro} onPress={() => setLucro(true)}>
-          <View style={lucro ? estilos.selecao : estilos.naoselecao}>
-            <Text style={[estilos.texto18, lucro? {color: "#fff"}:{}]}>&uarr; Receita</Text>
+          <View
+            style={[
+              lucro ? estilos.selecao : estilos.naoselecao,
+              { flexDirection: 'row', alignItems: 'center', gap: 2 },
+            ]}
+          >
+            <Feather
+              name="arrow-up"
+              size={18}
+              color={lucro ? '#fff' : {}}
+            ></Feather>
+            <Text style={[estilos.texto18, lucro ? { color: '#fff' } : {}]}>
+              Receita
+            </Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity disabled={!lucro} onPress={() => setLucro(false)}>
-          <View style={!lucro ? estilos.selecao : estilos.naoselecao}>
-            <Text style={[estilos.texto18, !lucro? {color: "#fff"}:{}]}>&darr; Despesa</Text>
+          <View
+            style={[
+              !lucro ? estilos.selecao : estilos.naoselecao,
+              { flexDirection: 'row', alignItems: 'center', gap: 2 },
+            ]}
+          >
+            <Feather
+              name="arrow-down"
+              size={18}
+              color={!lucro ? '#fff' : {}}
+            ></Feather>
+            <Text style={[estilos.texto18, !lucro ? { color: '#fff' } : {}]}>
+              Despesa
+            </Text>
           </View>
         </TouchableOpacity>
       </View>
 
-      <Button
-        disabled={!disabled}
-        title="Finalizar"
-        onPress={() => acao()}
-      ></Button>
+      <TouchableOpacity disabled={false} onPress={() => acao()}>
+        <View
+          style={[
+            estilos.selecao,
+            estilos.btnSubmit,
+            { flexDirection: 'row', alignItems: 'center', gap: 2 },
+          ]}
+        >
+          <Feather name="check" size={18} color="#fff"></Feather>
+          <Text style={[estilos.texto18, { color: '#fff' }]}>
+            {itemSelecionado ? 'Alterar' : 'Cadastrar'}
+          </Text>
+        </View>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -108,23 +163,27 @@ const estilos = StyleSheet.create({
     backgroundColor: '#e9f2efff',
   },
   editingField: {
-    width: "100%",
-    paddingHorizontal: 20
+    width: '100%',
+    paddingHorizontal: 20,
   },
   entrada: {
     backgroundColor: '#fff',
     padding: 20,
     borderRadius: 20,
-    color: "#383e55ff",
-    fontSize: 16
+    color: '#383e55ff',
+    fontSize: 16,
   },
   selecao: {
     padding: 20,
     backgroundColor: '#3bb898ff',
-    borderRadius: 100
+    borderRadius: 20,
+  },
+  btnSubmit: {
+    backgroundColor: '#3b8cb8ff',
   },
   texto18: {
     fontSize: 18,
+    color: '#383e55ff',
   },
   naoselecao: {
     padding: 20,
@@ -140,8 +199,8 @@ const estilos = StyleSheet.create({
   },
   btnBack: {
     padding: 20,
-    backgroundColor: '#383e55ff',
-    borderRadius: 100,
+    backgroundColor: '#46675dff',
+    borderRadius: 20,
   },
   btnText: {
     color: '#fff',
@@ -152,8 +211,8 @@ const estilos = StyleSheet.create({
   },
 
   rotulo: {
-    color: "#383e55ff",
+    color: '#383e55ff',
     fontSize: 18,
-    padding: 10
-  }
+    padding: 10,
+  },
 });
