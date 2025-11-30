@@ -3,10 +3,17 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 export default function CardTransacao({ itemRecebido, idItem }) {
-    const navegacao = useNavigation()
+  const navegacao = useNavigation();
   return (
     <View style={estilos.valor}>
-      <TouchableOpacity onPress={()=>navegacao.navigate('EditarFinanca', {itemSelecionado: itemRecebido, idItem: idItem})}>
+      <TouchableOpacity
+        onPress={() =>
+          navegacao.navigate('EditarFinanca', {
+            itemSelecionado: itemRecebido,
+            idItem: idItem,
+          })
+        }
+      >
         <View style={estilos.innerValor}>
           <Text style={estilos.rotulo}>{itemRecebido.nome}</Text>
           <Text
@@ -19,7 +26,7 @@ export default function CardTransacao({ itemRecebido, idItem }) {
             ]}
           >
             {Number(itemRecebido.valor) > 0 ? '' : '-'}R$
-            {Math.abs(itemRecebido.valor)}
+            {Math.abs(Number(itemRecebido.valor)).toFixed(2).replace('.', ',')}
           </Text>
         </View>
       </TouchableOpacity>

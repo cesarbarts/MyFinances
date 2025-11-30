@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Alert,
+  KeyboardAvoidingView,
 } from 'react-native';
 import Feather from '@react-native-vector-icons/feather';
 import { useNavigation } from '@react-navigation/native';
@@ -62,7 +63,10 @@ export default function EditarFinancasView({ route }) {
   }
 
   return (
-    <View style={estilos.main}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={estilos.main}
+    >
       <TouchableOpacity onPress={() => navegacao.goBack()}>
         <View
           style={[
@@ -87,8 +91,9 @@ export default function EditarFinancasView({ route }) {
       <View style={estilos.editingField}>
         <Text style={estilos.rotulo}>Valor</Text>
         <TextInput
+          keyboardType="numeric"
           defaultValue={String(valor)}
-          onChangeText={setValor}
+          onChangeText={text => setValor(text.replace(',', '.'))}
           style={estilos.entrada}
         ></TextInput>
         <Text style={estilos.rotulo}>Título</Text>
@@ -150,7 +155,7 @@ export default function EditarFinancasView({ route }) {
           </Text>
         </View>
       </TouchableOpacity>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 

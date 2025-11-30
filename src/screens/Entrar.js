@@ -1,4 +1,4 @@
-import React, {  useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -7,19 +7,24 @@ import {
   TouchableOpacity,
   StyleSheet,
   Alert,
+  KeyboardAvoidingView,
 } from 'react-native';
-import { useLayoutEffect } from 'react';
-import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect } from '@react-navigation/native';
 export default function EntrarView({ funcaoSetUser }) {
   const [email, setEmail] = useState();
 
   const [senha, setSenha] = useState();
 
+  useFocusEffect(
+    useCallback(() => {
+      setEmail('');
+      setSenha('');
+    }, []),
+  );
 
   function login() {
-    if (email === '' || senha === '') {
+    if (!email || !senha) {
       return Alert.alert('Erro', 'E-mail e senha devem ser preenchidos');
     } else {
       auth()
@@ -35,8 +40,8 @@ export default function EntrarView({ funcaoSetUser }) {
   }
 
   function cadastrar() {
-    if (email === '' || senha === '') {
-      return Alert.alert('Erro', 'E-mail e senha devem ser preenchidos');
+    if (!email || !senha) {
+      Alert.alert('Erro', 'E-mail e senha devem ser preenchidos');
     } else {
       auth()
         .createUserWithEmailAndPassword(email, senha)
@@ -51,14 +56,23 @@ export default function EntrarView({ funcaoSetUser }) {
   }
 
   return (
-    <View style={estilos.main}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={estilos.main}
+    >
       <Text style={estilos.titulo}>MyFinances</Text>
 
       <View style={estilos.editingField}>
         <Text style={estilos.rotulo}>E-mail</Text>
-        <TextInput keyboardType="email-address" onChangeText={setEmail} style={estilos.entrada}></TextInput>
+        <TextInput
+          value={email}
+          keyboardType="email-address"
+          onChangeText={text => setEmail(text.toLowerCase())}
+          style={estilos.entrada}
+        ></TextInput>
         <Text style={estilos.rotulo}>Senha</Text>
         <TextInput
+          value={senha}
           secureTextEntry
           onChangeText={setSenha}
           style={estilos.entrada}
@@ -76,9 +90,8 @@ export default function EntrarView({ funcaoSetUser }) {
             <Text style={[estilos.texto18]}>Cadastrar</Text>
           </View>
         </TouchableOpacity>
-        
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -100,7 +113,7 @@ const estilos = StyleSheet.create({
     borderRadius: 20,
     color: '#383e55ff',
     fontSize: 16,
-    textTransform: "lowercase"
+    textTransform: 'lowercase',
   },
   selecao: {
     padding: 20,
@@ -109,7 +122,7 @@ const estilos = StyleSheet.create({
   },
   texto18: {
     fontSize: 18,
-    color: "#383e55ff"
+    color: '#383e55ff',
   },
   naoselecao: {
     padding: 20,
