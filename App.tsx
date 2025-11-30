@@ -58,6 +58,7 @@ export default function App() {
             name="Finanças"
             component={StackTabs}
           />
+         
           <Tabs.Screen
             options={{
               tabBarIcon: ({ color, size }) => (

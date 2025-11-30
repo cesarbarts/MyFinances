@@ -210,6 +210,23 @@ export default function HomeView() {
                 <Text style={[estilos.btnText, estilos.texto18]}>
                   Filtrar - {formataData(daySelec, 1)}
                 </Text>
+
+              </View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => navegacao.navigate('Analisar',{dados: financas})}>
+            <View>
+              <View
+                style={[
+                  estilos.btnBack,
+                  { flexDirection: 'row', alignItems: 'center', gap: 2 },
+                ]}
+              >
+                <Feather name="bar-chart-2" size={18} color="#26ab91ff"></Feather>
+                <Text style={[estilos.btnText, estilos.texto18]}>
+                  Analisar
+                </Text>
+                
               </View>
             </View>
           </TouchableOpacity>

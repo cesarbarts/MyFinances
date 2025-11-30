@@ -43,7 +43,7 @@ export default function EditarFinancasView({ route }) {
       .update({
         valor: lucro ? Math.abs(Number(valor)) : -Math.abs(Number(valor)),
         nome: nome,
-        data: Date.now(),
+        //data: Date.now(),
       })
       .then(() => {
         navegacao.goBack();
