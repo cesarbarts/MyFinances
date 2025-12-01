@@ -44,12 +44,8 @@ const estilos = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     borderRadius: 20,
-    shadowColor: '#000',
-    shadowRadius: 5,
-    shadowOffset: 0,
-    shadowOpacity: 0.05,
   },
-  valor: { paddingHorizontal: 20 },
+  valor: { },
   firstText: {
     fontSize: 18,
     textAlign: 'right',

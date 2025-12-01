@@ -43,7 +43,6 @@ export default function EditarFinancasView({ route }) {
       .update({
         valor: lucro ? Math.abs(Number(valor)) : -Math.abs(Number(valor)),
         nome: nome,
-        //data: Date.now(),
       })
       .then(() => {
         navegacao.goBack();
@@ -151,7 +150,7 @@ export default function EditarFinancasView({ route }) {
         >
           <Feather name="check" size={18} color="#fff"></Feather>
           <Text style={[estilos.texto18, { color: '#fff' }]}>
-            {itemSelecionado ? 'Alterar' : 'Cadastrar'}
+            {itemSelecionado ? 'Salvar alterações' : 'Cadastrar'}
           </Text>
         </View>
       </TouchableOpacity>
@@ -166,10 +165,10 @@ const estilos = StyleSheet.create({
     alignItems: 'center',
     gap: 20,
     backgroundColor: '#e9f2efff',
+    padding: 20
   },
   editingField: {
     width: '100%',
-    paddingHorizontal: 20,
   },
   entrada: {
     backgroundColor: '#fff',

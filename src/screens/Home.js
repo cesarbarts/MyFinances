@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import {
   View,
   Text,
-  Button,
   FlatList,
   StyleSheet,
   ScrollView,
@@ -13,7 +12,7 @@ import {
 } from 'react-native';
 import Feather from '@react-native-vector-icons/feather';
 import { useNavigation } from '@react-navigation/native';
-import { Filter, queryEqual } from '@react-native-firebase/firestore';
+import { Filter } from '@react-native-firebase/firestore';
 import firestore from '@react-native-firebase/firestore';
 
 import { useFocusEffect } from '@react-navigation/native';
@@ -197,7 +196,7 @@ export default function HomeView() {
       </View>
 
       <View style={estilos.second}>
-        <View>
+        <View style={{ flexDirection: 'row', marginBottom: 20 }}>
           <TouchableOpacity onPress={() => setModal(true)}>
             <View>
               <View
@@ -210,11 +209,12 @@ export default function HomeView() {
                 <Text style={[estilos.btnText, estilos.texto18]}>
                   Filtrar - {formataData(daySelec, 1)}
                 </Text>
-
               </View>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navegacao.navigate('Analisar',{dados: financas})}>
+          <TouchableOpacity
+            onPress={() => navegacao.navigate('Analisar', { dados: financas })}
+          >
             <View>
               <View
                 style={[
@@ -222,42 +222,55 @@ export default function HomeView() {
                   { flexDirection: 'row', alignItems: 'center', gap: 2 },
                 ]}
               >
-                <Feather name="bar-chart-2" size={18} color="#26ab91ff"></Feather>
-                <Text style={[estilos.btnText, estilos.texto18]}>
-                  Analisar
-                </Text>
-                
+                <Feather
+                  name="bar-chart-2"
+                  size={18}
+                  color="#26ab91ff"
+                ></Feather>
+                <Text style={[estilos.btnText, estilos.texto18]}>Analisar</Text>
               </View>
             </View>
           </TouchableOpacity>
         </View>
-        <FlatList
-          data={financas}
-          renderItem={({ item }) => (
-            <CardTransacao idItem={item.id} itemRecebido={item.data()} />
-          )}
-        ></FlatList>
-
-        <TouchableOpacity
-          disabled={false}
-          onPress={() =>
-            navegacao.navigate('EditarFinanca', {
-              itemSelecionado: '',
-              idItem: '',
-            })
-          }
+        <View
+          style={{
+            marginHorizontal: 20,
+            borderRadius: 20,
+            overflow: 'hidden',
+            height: '50%',
+            flex: 1,
+          }}
         >
-          <View
-            style={[
-              estilos.selecao,
-              estilos.btnSubmit,
-              { flexDirection: 'row', alignItems: 'center', gap: 2 },
-            ]}
+          <FlatList
+            data={financas}
+            renderItem={({ item }) => (
+              <CardTransacao idItem={item.id} itemRecebido={item.data()} />
+            )}
+          ></FlatList>
+        </View>
+
+        <View>
+          <TouchableOpacity
+            disabled={false}
+            onPress={() =>
+              navegacao.navigate('EditarFinanca', {
+                itemSelecionado: '',
+                idItem: '',
+              })
+            }
           >
-            <Feather name="plus" size={18} color="#fff"></Feather>
-            <Text style={[estilos.texto18, { color: '#fff' }]}>Novo</Text>
-          </View>
-        </TouchableOpacity>
+            <View
+              style={[
+                estilos.selecao,
+                estilos.btnSubmit,
+                { flexDirection: 'row', alignItems: 'center', gap: 2 },
+              ]}
+            >
+              <Feather name="plus" size={18} color="#fff"></Feather>
+              <Text style={[estilos.texto18, { color: '#fff' }]}>Novo</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
       </View>
       <Modal transparent={true} visible={modal} animationType={'slide'}>
         <View style={{ flex: 1, justifyContent: 'flex-end' }}>
@@ -331,7 +344,7 @@ const estilos = StyleSheet.create({
   },
   btnBack: {
     backgroundColor: '#383e5500',
-    margin: 20,
+    marginHorizontal: 20,
   },
   btnText: {
     color: '#26ab91ff',

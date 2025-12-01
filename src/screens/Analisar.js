@@ -6,26 +6,50 @@ import {
   StyleSheet,
   TouchableOpacity,
   Modal,
-  Alert,
+  Share,
 } from 'react-native';
 import Feather from '@react-native-vector-icons/feather';
 import { BarChart } from 'react-native-gifted-charts';
-import auth from '@react-native-firebase/auth';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import { useRoute } from '@react-navigation/native';
+import { generatePDF } from 'react-native-html-to-pdf';
 export default function Analisar({ route }) {
-  const [dados2, setDados2] = useState([]);
+  async function exportarPDF() {
 
+    let results = await generatePDF({
+      html: '<h2>' + html + '</h2>',
+      fileName: 'PDF - ' + new Date(),
+      base64: true,
+    });
+
+    console.log(results);
+
+    Share.share({
+      url: 'file://' + results.filePath,
+    });
+  }
+
+  const [dados2, setDados2] = useState([]);
+  const [html, setHtml] = useState('');
   const [modal, setModal] = useState(false);
   const [itemSelec, setItemSelec] = useState(false);
+  const navegacao = useNavigation();
   const { dados } = route.params;
   useFocusEffect(
     useCallback(() => {
       let matriz = [];
       let soma = 0;
       let itemId = 0;
+      let html = '';
       dados.forEach(el => {
         soma += el.data().valor;
+        html +=
+          '<h1>' +
+          el.data().nome +
+          ',' +
+          el.data().valor +
+          ',' +
+          soma +
+          '</h1><br>';
         matriz.push({
           itemId: itemId,
           value: soma,
@@ -36,12 +60,9 @@ export default function Analisar({ route }) {
         ++itemId;
       });
       setDados2(matriz);
+      setHtml(html);
     }, []),
   );
-
-  function sair() {
-    auth().signOut();
-  }
 
   return (
     <View style={estilos.geral}>
@@ -64,8 +85,25 @@ export default function Analisar({ route }) {
       </View>
 
       <View style={estilos.second}>
+        <View>
+          <View
+            style={[
+              estilos.btnBack,
+              {
+                flexDirection: 'row',
+                alignItems: 'center',
+                gap: 2,
+                backgroundColor: '#ffffff00',
+              },
+            ]}
+          >
+            <Feather name="eye" size={18} color="#26ab91ff"></Feather>
+            <Text style={[estilos.btnText, estilos.texto18]}>
+              Selecione um para ver detalhes
+            </Text>
+          </View>
+        </View>
         <BarChart
-          vertical
           barWidth={50}
           barBorderRadius={4}
           data={dados2}
@@ -81,6 +119,32 @@ export default function Analisar({ route }) {
             console.log(dados2);
           }}
         />
+        <TouchableOpacity disabled={false} onPress={exportarPDF}>
+          <View
+            style={[
+              estilos.selecao,
+              estilos.btnSubmit,
+              { flexDirection: 'row', alignItems: 'center', gap: 2 },
+            ]}
+          >
+            <Feather name="share" size={18} color="#fff"></Feather>
+            <Text style={[estilos.texto18, { color: '#fff' }]}>
+              Exportar dados
+            </Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navegacao.goBack()}>
+          <View
+            style={[
+              estilos.selecao,
+              estilos.btnBack,
+              { flexDirection: 'row', alignItems: 'center', gap: 2 },
+            ]}
+          >
+            <Feather name="arrow-left" size={18} color="#fff"></Feather>
+            <Text style={[estilos.texto18, { color: '#fff' }]}>Voltar</Text>
+          </View>
+        </TouchableOpacity>
       </View>
       <Modal transparent={true} visible={modal} animationType={'slide'}>
         <View style={{ flex: 1, justifyContent: 'flex-end' }}>
@@ -90,18 +154,7 @@ export default function Analisar({ route }) {
           >
             <View style={{ backgroundColor: '#ffffff00', flex: 1 }}></View>
           </TouchableOpacity>
-          <View
-            style={{
-              backgroundColor: '#fff',
-              flex: 0.5,
-              borderRadius: 20,
-              marginHorizontal: 10,
-              shadowColor: '#000',
-              shadowRadius: 10,
-              shadowOpacity: 0.2,
-              padding: 20,
-            }}
-          >
+          <View style={estilos.modalText}>
             <Text style={estilos.rotulo}>
               {itemSelec.itemId === 0
                 ? 'Você começou o dia '
@@ -122,11 +175,13 @@ export default function Analisar({ route }) {
               <Text>
                 {itemSelec.itemId < 1
                   ? ''
-                  : ('Perceba: R$'  +
+                  : 'Perceba: R$' +
                     Math.abs(dados2[itemSelec.itemId - 1]?.valorOriginal) +
                     ' tinha sido o valor de ' +
                     dados2[itemSelec.itemId - 1]?.label +
-                    '. Com ' + itemSelec.label + ', ' +
+                    '. Com ' +
+                    itemSelec.label +
+                    ', ' +
                     (itemSelec.value < dados2[itemSelec.itemId - 1]?.value
                       ? 'a redução'
                       : 'o aumento') +
@@ -136,8 +191,10 @@ export default function Analisar({ route }) {
                         (itemSelec.value -
                           dados2[itemSelec.itemId - 1]?.value)) /
                         dados2[itemSelec.itemId - 1]?.value,
-                    ).toFixed(2).replace('.', ',') +
-                    '%')}
+                    )
+                      .toFixed(2)
+                      .replace('.', ',') +
+                    '%'}
               </Text>
             </Text>
           </View>
@@ -150,6 +207,7 @@ export default function Analisar({ route }) {
 const estilos = StyleSheet.create({
   geral: {
     flex: 1,
+    justifyContent: "space-between"
   },
   first: {
     flex: 0.3,
@@ -157,7 +215,9 @@ const estilos = StyleSheet.create({
   second: {
     backgroundColor: '#e9f2efff',
     flex: 0.7,
-    paddingTop: 20,
+    justifyContent: "flex-start",
+    gap: 20,
+    padding: 20
   },
   firstText: {
     color: '#fff',
@@ -172,8 +232,7 @@ const estilos = StyleSheet.create({
     fontSize: 18,
   },
   btnBack: {
-    backgroundColor: '#383e5500',
-    margin: 20,
+    backgroundColor: '#46675dff',
   },
   btnText: {
     color: '#26ab91ff',
@@ -184,7 +243,6 @@ const estilos = StyleSheet.create({
     padding: 20,
     backgroundColor: '#3bb898ff',
     borderRadius: 20,
-    margin: 20,
   },
   btnSubmit: {
     backgroundColor: '#3b8cb8ff',
@@ -193,5 +251,15 @@ const estilos = StyleSheet.create({
   rotulo: {
     fontSize: 16,
     color: '#383e55ff',
+  },
+  modalText: {
+    backgroundColor: '#fff',
+    flex: 0.25,
+    borderRadius: 20,
+    marginHorizontal: 10,
+    shadowColor: '#000',
+    shadowRadius: 10,
+    shadowOpacity: 0.2,
+    padding: 20,
   },
 });
