@@ -73,8 +73,8 @@ export default function EditarFinancasView({ route }) {
             { flexDirection: 'row', gap: 2, alignItems: 'center' },
           ]}
         >
-          <Feather name="arrow-left" size={18} color="#fff"></Feather>
-          <Text style={[estilos.btnText, estilos.texto18, { color: '#fff' }]}>
+          <Feather name="arrow-left" size={18} ></Feather>
+          <Text style={[estilos.btnText, estilos.texto18]}>
             Voltar
           </Text>
         </View>
@@ -114,9 +114,9 @@ export default function EditarFinancasView({ route }) {
             <Feather
               name="arrow-up"
               size={18}
-              color={lucro ? '#fff' : {}}
+              color={"#fff"}
             ></Feather>
-            <Text style={[estilos.texto18, lucro ? { color: '#fff' } : {}]}>
+            <Text style={[estilos.texto18, {color: "#fff"} ]}>
               Receita
             </Text>
           </View>
@@ -131,9 +131,9 @@ export default function EditarFinancasView({ route }) {
             <Feather
               name="arrow-down"
               size={18}
-              color={!lucro ? '#fff' : {}}
+              color={'#fff'}
             ></Feather>
-            <Text style={[estilos.texto18, !lucro ? { color: '#fff' } : {}]}>
+            <Text style={[estilos.texto18 , {color: "#fff"}]}>
               Despesa
             </Text>
           </View>
@@ -164,30 +164,29 @@ const estilos = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     gap: 20,
-    backgroundColor: '#e9f2efff',
+    backgroundColor: '#00171F', //FundoClaro
     padding: 20
   },
   editingField: {
     width: '100%',
   },
   entrada: {
-    backgroundColor: '#fff',
+    backgroundColor: '#003459',
     padding: 20,
     borderRadius: 20,
-    color: '#383e55ff',
+    color: '#ffffff',
     fontSize: 16,
   },
   selecao: {
     padding: 20,
-    backgroundColor: '#3bb898ff',
+    backgroundColor: '#00A8E8', //Verde
     borderRadius: 20,
   },
   btnSubmit: {
-    backgroundColor: '#3b8cb8ff',
+    backgroundColor: '#007EA7', //Azul
   },
   texto18: {
     fontSize: 18,
-    color: '#383e55ff',
   },
   naoselecao: {
     padding: 20,
@@ -203,19 +202,19 @@ const estilos = StyleSheet.create({
   },
   btnBack: {
     padding: 20,
-    backgroundColor: '#46675dff',
+    backgroundColor: '#FFFFFF',
     borderRadius: 20,
   },
   btnText: {
-    color: '#fff',
+    color: '#003459',
   },
   titulo: {
     fontSize: 28,
-    color: '#383e55ff',
+    color: '#ffffff',
   },
 
   rotulo: {
-    color: '#383e55ff',
+    color: '#ffffff',
     fontSize: 18,
     padding: 10,
   },

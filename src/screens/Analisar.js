@@ -54,7 +54,7 @@ export default function Analisar({ route }) {
           itemId: itemId,
           value: soma,
           valorOriginal: el.data().valor,
-          frontColor: soma < 0 ? '#c74242ff' : '#3bb898ff',
+          frontColor: soma < 0 ? '#c74242ff' : '#00A8E8',
           label: el.data().nome,
         });
         ++itemId;
@@ -71,7 +71,7 @@ export default function Analisar({ route }) {
           style={[
             {
               flex: 1,
-              backgroundColor: '#26ab91ff',
+              backgroundColor: '#00A8E8',
               justifyContent: 'flex-end',
               padding: 20,
             },
@@ -93,17 +93,18 @@ export default function Analisar({ route }) {
                 flexDirection: 'row',
                 alignItems: 'center',
                 gap: 2,
-                backgroundColor: '#ffffff00',
+                backgroundColor: '#00345900',
               },
             ]}
           >
-            <Feather name="eye" size={18} color="#26ab91ff"></Feather>
+            <Feather name="eye" size={18} color="#00A8E8"></Feather>
             <Text style={[estilos.btnText, estilos.texto18]}>
               Selecione um para ver detalhes
             </Text>
           </View>
         </View>
-        <BarChart
+        <View style={{backgroundColor: "#003459", overflow: "hidden", padding: 20, borderRadius: 20}}>
+            <BarChart
           barWidth={50}
           barBorderRadius={4}
           data={dados2}
@@ -119,6 +120,7 @@ export default function Analisar({ route }) {
             console.log(dados2);
           }}
         />
+        </View>
         <TouchableOpacity disabled={false} onPress={exportarPDF}>
           <View
             style={[
@@ -152,7 +154,7 @@ export default function Analisar({ route }) {
             onPress={() => setModal(false)}
             style={{ flex: 0.5 }}
           >
-            <View style={{ backgroundColor: '#ffffff00', flex: 1 }}></View>
+            <View style={{ backgroundColor: '#00345900', flex: 1 }}></View>
           </TouchableOpacity>
           <View style={estilos.modalText}>
             <Text style={estilos.rotulo}>
@@ -163,7 +165,7 @@ export default function Analisar({ route }) {
                 style={{
                   fontWeight: 'bold',
                   color:
-                    itemSelec.valorOriginal < 0 ? '#c74242ff' : '#3bb898ff',
+                    itemSelec.valorOriginal < 0 ? '#c74242ff' : '#00A8E8',
                 }}
               >
                 {itemSelec.valorOriginal < 0 ? 'perdendo ' : 'ganhando '}
@@ -213,7 +215,7 @@ const estilos = StyleSheet.create({
     flex: 0.3,
   },
   second: {
-    backgroundColor: '#e9f2efff',
+    backgroundColor: '#00171F',
     flex: 0.7,
     justifyContent: "flex-start",
     gap: 20,
@@ -232,28 +234,28 @@ const estilos = StyleSheet.create({
     fontSize: 18,
   },
   btnBack: {
-    backgroundColor: '#46675dff',
+    backgroundColor: '#003459',
   },
   btnText: {
-    color: '#26ab91ff',
+    color: '#00A8E8',
     fontWeight: 'bold',
     textTransform: 'uppercase',
   },
   selecao: {
     padding: 20,
-    backgroundColor: '#3bb898ff',
+    backgroundColor: '#00A8E8',
     borderRadius: 20,
   },
   btnSubmit: {
-    backgroundColor: '#3b8cb8ff',
+    backgroundColor: '#007EA7',
   },
 
   rotulo: {
     fontSize: 16,
-    color: '#383e55ff',
+    color: '#ffffff',
   },
   modalText: {
-    backgroundColor: '#fff',
+    backgroundColor: '#003459',
     flex: 0.25,
     borderRadius: 20,
     marginHorizontal: 10,

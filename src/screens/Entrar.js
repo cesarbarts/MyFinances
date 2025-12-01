@@ -101,32 +101,32 @@ const estilos = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     gap: 20,
-    backgroundColor: '#e9f2efff',
+    backgroundColor: '#00171F',
   },
   editingField: {
     width: '100%',
     paddingHorizontal: 20,
   },
   entrada: {
-    backgroundColor: '#fff',
+    backgroundColor: '#003459',
     padding: 20,
     borderRadius: 20,
-    color: '#383e55ff',
+    color: '#ffffff',
     fontSize: 16,
     textTransform: 'lowercase',
   },
   selecao: {
     padding: 20,
-    backgroundColor: '#3bb898ff',
+    backgroundColor: '#00A8E8',
     borderRadius: 20,
   },
   texto18: {
     fontSize: 18,
-    color: '#383e55ff',
+    color: '#ffffff',
   },
   naoselecao: {
     padding: 20,
-    backgroundColor: '#77b9ff00',
+    backgroundColor: '#00000000',
   },
   areabtn: {
     flexDirection: 'row',
@@ -138,7 +138,7 @@ const estilos = StyleSheet.create({
   },
   btnBack: {
     padding: 20,
-    backgroundColor: '#383e55ff',
+    backgroundColor: '#003459',
     borderRadius: 20,
   },
   btnText: {
@@ -146,11 +146,11 @@ const estilos = StyleSheet.create({
   },
   titulo: {
     fontSize: 28,
-    color: '#383e55ff',
+    color: '#ffffff',
   },
 
   rotulo: {
-    color: '#383e55ff',
+    color: '#ffffff',
     fontSize: 18,
     padding: 10,
   },

@@ -21,7 +21,7 @@ export default function CardTransacao({ itemRecebido, idItem }) {
               estilos.firstText,
               {
                 color:
-                  Number(itemRecebido.valor) > 0 ? '#3bb898ff' : '#c74242ff',
+                  Number(itemRecebido.valor) > 0 ? '#00A8E8' : '#c74242ff',
               },
             ]}
           >
@@ -36,7 +36,7 @@ export default function CardTransacao({ itemRecebido, idItem }) {
 
 const estilos = StyleSheet.create({
   innerValor: {
-    backgroundColor: '#fff',
+    backgroundColor: '#003459',
     padding: 20,
     marginBottom: 10,
     flex: 1,
@@ -52,6 +52,6 @@ const estilos = StyleSheet.create({
   },
   rotulo: {
     fontSize: 16,
-    color: '#383e55ff',
+    color: '#fff',
   },
 });

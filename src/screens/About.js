@@ -23,7 +23,7 @@ export default function About() {
               style={[
                 {
                   flex: 1,
-                  backgroundColor: '#26ab91ff',
+                  backgroundColor: '#00A8E8',
                   justifyContent: 'flex-end',
                   padding: 20,
                 },
@@ -62,7 +62,7 @@ const estilos = StyleSheet.create({
     flex: 0.3,
   },
   second: {
-    backgroundColor: '#e9f2efff',
+    backgroundColor: '#00171F',
     flex: 0.7,
     paddingTop: 20,
   },
@@ -83,17 +83,17 @@ const estilos = StyleSheet.create({
     margin: 20,
   },
   btnText: {
-    color: '#26ab91ff',
+    color: '#00A8E8',
     fontWeight: 'bold',
     textTransform: 'uppercase',
   },
   selecao: {
     padding: 20,
-    backgroundColor: '#3bb898ff',
+    backgroundColor: '#00A8E8',
     borderRadius: 20,
     margin: 20,
   },
   btnSubmit: {
-    backgroundColor: '#3b8cb8ff',
+    backgroundColor: '#007EA7',
   },
 });

@@ -45,8 +45,8 @@ export default function App() {
           screenOptions={{
             headerShown: false,
             tabBarShowLabel: true,
-            tabBarActiveTintColor: '#26ab91ff',
-            tabBarStyle: { backgroundColor: '#e9f2efff', borderTopWidth: 0 },
+            tabBarActiveTintColor: '#00A8E8',
+            tabBarStyle: { backgroundColor: '#00171F', borderTopWidth: 0 },
           }}
         >
           <Tabs.Screen
@@ -92,7 +92,7 @@ const estilos = StyleSheet.create({
     flex: 0.3,
   },
   second: {
-    backgroundColor: '#e9f2efff',
+    backgroundColor: '#00171F',
     flex: 0.7,
     paddingTop: 20,
   },
@@ -113,7 +113,7 @@ const estilos = StyleSheet.create({
     margin: 20,
   },
   btnText: {
-    color: '#26ab91ff',
+    color: '#00A8E8',
     fontWeight: 'bold',
     textTransform: 'uppercase',
   },

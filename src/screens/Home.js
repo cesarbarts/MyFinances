@@ -140,7 +140,7 @@ export default function HomeView() {
           { justifyContent: 'center', alignItems: 'center' },
         ]}
       >
-        <ActivityIndicator size={30} color={'#26ab91ff'}></ActivityIndicator>
+        <ActivityIndicator size={30} color={'#00A8E8'}></ActivityIndicator>
       </View>
     );
   }
@@ -155,7 +155,7 @@ export default function HomeView() {
         >
           <View
             style={{
-              backgroundColor: soma < 0 ? '#c74242ff' : '#2a9a84ff',
+              backgroundColor: soma < 0 ? '#c74242ff' : '#00A8E8',
               justifyContent: 'flex-end',
               width: larguraTela,
               padding: 20,
@@ -168,7 +168,7 @@ export default function HomeView() {
           </View>
           <View
             style={{
-              backgroundColor: soma < 0 ? '#2a9a84ff' : '#2a9a84ff',
+              backgroundColor: soma < 0 ? '#00A8E8' : '#00A8E8',
               justifyContent: 'flex-end',
               width: larguraTela,
               padding: 20,
@@ -181,7 +181,7 @@ export default function HomeView() {
           </View>
           <View
             style={{
-              backgroundColor: soma < 0 ? '#c74242ff' : '#c74242ff',
+              backgroundColor: soma < 0 ? '#c74242ff' : '#c74242ff', //Vermelho
               justifyContent: 'flex-end',
               width: larguraTela,
               padding: 20,
@@ -202,10 +202,10 @@ export default function HomeView() {
               <View
                 style={[
                   estilos.btnBack,
-                  { flexDirection: 'row', alignItems: 'center', gap: 2 },
+                  { flexDirection: 'row', justifyContent: "space-between",alignItems: 'center', gap: 2 },
                 ]}
               >
-                <Feather name="filter" size={18} color="#26ab91ff"></Feather>
+                <Feather name="filter" size={18} color="#00A8E8"></Feather>
                 <Text style={[estilos.btnText, estilos.texto18]}>
                   Filtrar - {formataData(daySelec, 1)}
                 </Text>
@@ -225,7 +225,7 @@ export default function HomeView() {
                 <Feather
                   name="bar-chart-2"
                   size={18}
-                  color="#26ab91ff"
+                  color="#00A8E8"
                 ></Feather>
                 <Text style={[estilos.btnText, estilos.texto18]}>Analisar</Text>
               </View>
@@ -278,11 +278,11 @@ export default function HomeView() {
             onPress={() => setModal(false)}
             style={{ flex: 0.5 }}
           >
-            <View style={{ backgroundColor: '#ffffff00', flex: 1 }}></View>
+            <View style={{ backgroundColor: '#00345900', flex: 1 }}></View>
           </TouchableOpacity>
           <View
             style={{
-              backgroundColor: '#fff',
+              backgroundColor: '#003459',
               flex: 0.5,
               borderRadius: 20,
               marginHorizontal: 10,
@@ -293,11 +293,16 @@ export default function HomeView() {
             }}
           >
             <Calendar
+            style={{backgroundColor: "#003459"}}
               theme={{
-                selectedDayBackgroundColor: '#26ab91ff',
-                selectedDayTextColor: '#ffffff',
-                todayTextColor: '#26ab91ff',
-                arrowColor: '#26ab91ff',
+                backgroundColor: "#00171F",
+                selectedDayBackgroundColor: '#00A8E8',
+                todayTextColor: '#00A8E8',
+                arrowColor: '#00A8E8',
+                calendarBackground: "#003459",
+                dotColor: "#fff",
+                dayTextColor: "#fff",
+                monthTextColor: "#fff"
               }}
               onDayPress={day => {
                 setDaySelec(day.timestamp + 1);
@@ -307,7 +312,7 @@ export default function HomeView() {
                 [formataData(daySelec, 2)]: {
                   selected: true,
                   disableTouchEvent: true,
-                  selectedDotColor: 'orange',
+                  selectedDotColor: '#c74242ff',
                 },
               }}
             />
@@ -321,7 +326,7 @@ export default function HomeView() {
 const estilos = StyleSheet.create({
   geral: {
     flex: 1,
-    backgroundColor: '#e9f2efff',
+    backgroundColor: '#00171F',
   },
   first: {
     flex: 0.3,
@@ -331,12 +336,12 @@ const estilos = StyleSheet.create({
     paddingTop: 20,
   },
   firstText: {
-    color: '#fff',
+    color: '#fff', //branco
     fontSize: 32,
     fontWeight: 'bold',
   },
   firstLabel: {
-    color: '#ffffff',
+    color: '#ffffff', 
     textTransform: 'uppercase',
   },
   texto18: {
@@ -347,17 +352,17 @@ const estilos = StyleSheet.create({
     marginHorizontal: 20,
   },
   btnText: {
-    color: '#26ab91ff',
+    color: '#00A8E8',
     fontWeight: 'bold',
     textTransform: 'uppercase',
   },
   selecao: {
     padding: 20,
-    backgroundColor: '#3bb898ff',
+    backgroundColor: '#00A8E8',
     borderRadius: 20,
     margin: 20,
   },
   btnSubmit: {
-    backgroundColor: '#3b8cb8ff',
+    backgroundColor: '#007EA7',
   },
 });
