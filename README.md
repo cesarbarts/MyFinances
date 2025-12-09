@@ -1,98 +1,110 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
-
-# Getting Started
-
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
-
-## Step 1: Start Metro
-
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
-
-To start the Metro dev server, run the following command from the root of your React Native project:
-
-```sh
-# Using npm
-npm start
-
-# OR using Yarn
-yarn start
-```
-
-## Step 2: Build and run your app
-
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
-
-### Android
-
-```sh
-# Using npm
-npm run android
-
-# OR using Yarn
-yarn android
-```
-
-### iOS
-
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
-```sh
-bundle install
-```
-
-Then, and every time you update your native dependencies, run:
-
-```sh
-bundle exec pod install
-```
-
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
-
-```sh
-# Using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
-```
-
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
-
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
-
-## Step 3: Modify your app
-
-Now that you have successfully run the app, let's make changes!
-
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
-
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
-
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
 # MyFinances
+
+O MyFinances é um aplicativo mobile de controle financeiro desenvolvido em React Native. Ele permite gerenciar receitas e despesas, visualizar relatórios gráficos e gerar PDFs, integrando autenticação e banco de dados via Firebase.
+
+
+<div>
+  <img src="https://github.com/user-attachments/assets/2d0e545c-81eb-4309-9113-182a6b248262" width="300" alt="Demonstração do App" />
+
+  </div>
+<br/>
+
+* O fluxo básico de navegação e funcionalidades do app pode ser visualizado abaixo:
+
+[![](https://mermaid.ink/img/pako:eNqNVN1O2zAUfhXLCAmkwhrSnyUXm6r-bJMAIcFulqLJTZzGwrEj24FC24s9CtoFV1zuCfJiO45DW20wLReWz_H5vvOfJY5lQnGIUy7v4owog65GU4HguzQgHRx8EdVzzCQaFMXhITo6-oCGGY1vBqXJll91WT0qeDyVc5LIj2uHdOf-PprwciFRQhFYU2FYTKqn6qd07xsaS7o6B_3K8jARXVFOLKqW0Ds0JAnRRslrB3RqC5owRWdE1_zZasv4RxjVD0WJi5G85vuS5St0RWY6Oie3dO6CRDRHAyC_3iXT5WyuSJHZanyfQMlQ5HK8UEzErCC8MbefZaz5gQZ5K_RZ5tTlNmGCiOppQ_6X9ckKGGXKOI3OaIkuqIL7jvH2ZqtcgmspCGcJSahGCaldbW2s1NSLG0UUVIpwKhKiokvKaQ1WaEQMuX4FdC5vJZIlGifMWOxEqjyyR8ld86FTLwm9hh_YyHTt1c6X3rT3k6oeUxZL_VZiA2jEL0horAsaV89gS_TWwIbg2kf4bR0YTIM2UtHoYMhlmWwVhzseXBA1cCjzAgTGMwu_GE2i8aKQCrK0wltRwRzJ0mxVTaOaUJhqptgZQJWnYjOIYw3O2EMzYJrlBYf0IAaCbHIKzaRgptkPbe453eYAFpyHe2mQtuwu3NBwz_f95n50xxKThSfFYhdbb3CDm83-H-cWrPGXBv_E4RaeK5bg0KiStnBOVU6siJeWcYpNRmEUcQhXmLebKZ6KNWAKIr5Jmb_AlCznGQ5TwjVIZZEQQ0eMwK7lG62CWlI1lKUwOOx4QU2CwyVe4NDzvGO_1w46vaDre-1-z2vhe1B3j0-8oNP1wTzw--1eZ93CD7Xf9vH7jg-PvaDf6Xc7NjVMYcKlOnM_xFiKlM3x-jcC9amq?type=png)](https://mermaid.live/edit#pako:eNqNVN1O2zAUfhXLCAmkwhrSnyUXm6r-bJMAIcFulqLJTZzGwrEj24FC24s9CtoFV1zuCfJiO45DW20wLReWz_H5vvOfJY5lQnGIUy7v4owog65GU4HguzQgHRx8EdVzzCQaFMXhITo6-oCGGY1vBqXJll91WT0qeDyVc5LIj2uHdOf-PprwciFRQhFYU2FYTKqn6qd07xsaS7o6B_3K8jARXVFOLKqW0Ds0JAnRRslrB3RqC5owRWdE1_zZasv4RxjVD0WJi5G85vuS5St0RWY6Oie3dO6CRDRHAyC_3iXT5WyuSJHZanyfQMlQ5HK8UEzErCC8MbefZaz5gQZ5K_RZ5tTlNmGCiOppQ_6X9ckKGGXKOI3OaIkuqIL7jvH2ZqtcgmspCGcJSahGCaldbW2s1NSLG0UUVIpwKhKiokvKaQ1WaEQMuX4FdC5vJZIlGifMWOxEqjyyR8ld86FTLwm9hh_YyHTt1c6X3rT3k6oeUxZL_VZiA2jEL0horAsaV89gS_TWwIbg2kf4bR0YTIM2UtHoYMhlmWwVhzseXBA1cCjzAgTGMwu_GE2i8aKQCrK0wltRwRzJ0mxVTaOaUJhqptgZQJWnYjOIYw3O2EMzYJrlBYf0IAaCbHIKzaRgptkPbe453eYAFpyHe2mQtuwu3NBwz_f95n50xxKThSfFYhdbb3CDm83-H-cWrPGXBv_E4RaeK5bg0KiStnBOVU6siJeWcYpNRmEUcQhXmLebKZ6KNWAKIr5Jmb_AlCznGQ5TwjVIZZEQQ0eMwK7lG62CWlI1lKUwOOx4QU2CwyVe4NDzvGO_1w46vaDre-1-z2vhe1B3j0-8oNP1wTzw--1eZ93CD7Xf9vH7jg-PvaDf6Xc7NjVMYcKlOnM_xFiKlM3x-jcC9amq)
+
+### Tecnologias Utilizadas
+
+Este projeto foi desenvolvido utilizando tecnologias modernas para garantir performance e escalabilidade. Abaixo estão as principais ferramentas:
+
+* [React Native](https://reactnative.dev/) (Framework principal)
+* [TypeScript](https://www.typescriptlang.org/) & JavaScript (Lógica do app)
+* [Firebase Auth](https://firebase.google.com/docs/auth) (Autenticação de usuários)
+* [Cloud Firestore](https://firebase.google.com/docs/firestore) (Banco de dados NoSQL em tempo real)
+* [React Navigation](https://reactnavigation.org/) (Navegação Stack e Bottom Tabs)
+* [React Native Calendars](https://github.com/wix/react-native-calendars) (Filtros por data)
+* [React Native Gifted Charts](https://github.com/Abhinandan-Kushwaha/react-native-gifted-charts) (Visualização de dados)
+* [React Native HTML to PDF](https://github.com/christopherdro/react-native-html-to-pdf) (Geração de relatórios)
+* [React Native Vector Icons](https://github.com/oblador/react-native-vector-icons) (Ícones Feather)
+
+## Dependências e Versões Necessárias
+
+Para rodar este projeto, você precisará ter o ambiente React Native configurado.
+
+* Node.js - Versão 18+ (Recomendado)
+* JDK - Versão 11 ou 17
+* Android Studio (Para emulador Android)
+* Xcode (Para emulador iOS - apenas Mac)
+* Conta no Firebase (Para configurar o backend)
+
+## Como rodar o projeto ✅
+
+1. Clone o repositório e instale as dependências:
+
+```bash
+git clone https://github.com/cesarbarts/MyFinances.git
+cd MyFinances
+npm install
+# ou
+yarn install
+```
+
+2. **Configuração do Firebase (Passo Crítico):**
+   * Crie um projeto no Console do Firebase.
+   * Adicione um app Android e baixe o arquivo `google-services.json`. Coloque-o em `android/app/`.
+   * (Opcional) Adicione um app iOS e baixe o `GoogleService-Info.plist`. Coloque-o na pasta `ios/`.
+   * Habilite o **Authentication** (Email/Senha) e o **Firestore Database** no console.
+
+3. Para rodar no Android:
+
+```bash
+npx react-native run-android
+```
+
+4. Para rodar no iOS (Mac apenas):
+
+```bash
+cd ios && pod install && cd ..
+npx react-native run-ios
+```
+
+Se tudo der certo, você verá a tela de Login/Cadastro do MyFinances.
+
+## Como rodar os testes
+
+Embora este projeto foca na implementação de features, você pode rodar os testes unitários padrão do Jest configurados no React Native com:
+
+```bash
+npm test
+```
+
+## 📌 Funcionalidades Detalhadas 📌
+
+O **MyFinances** vai além de um simples CRUD. Ele inclui:
+
+* **Autenticação Segura:** Login e registro integrados diretamente com o Firebase Auth.
+* **Dashboard Financeiro:** Visualização rápida do saldo total, receitas e despesas com suporte a "Dark Mode" nativo das cores do app.
+* **Filtros Inteligentes:** Uso do `react-native-calendars` para filtrar transações por datas específicas.
+* **Análise Gráfica:** A tela "Analisar" exibe um gráfico de barras (`BarChart`) mostrando a evolução do saldo item a item.
+* **Exportação de Relatórios:** Funcionalidade exclusiva que converte o resumo financeiro em HTML e gera um arquivo **PDF** pronto para ser compartilhado.
+
+## ⚠️ Problemas enfrentados
+
+Durante o desenvolvimento, enfrentei desafios técnicos que serviram de grande aprendizado.
+
+### Problema 1: Gerenciamento de Estado Assíncrono com Firestore
+Carregar dados do Firestore e calcular totais (Receitas/Despesas) causava, inicialmente, inconsistências visuais ou "flickering" na tela.
+* **Como solucionar:** Utilizei o hook `useFocusEffect` com `useCallback` para garantir que os dados fossem recarregados sempre que a tela ganhasse foco, além de implementar um estado de `loading` (ActivityIndicator) para melhorar a experiência do usuário enquanto a promessa do banco de dados era resolvida.
+
+### Problema 2: Geração e Compartilhamento de PDF
+Transformar dados dinâmicos da lista em um arquivo PDF formatado e garantir que o caminho do arquivo fosse acessível para compartilhamento.
+* **Como solucionar:** Integrei a biblioteca `react-native-html-to-pdf` montando uma string HTML dinamicamente dentro de um loop `forEach`. Após a geração, utilizei a API `Share` nativa do React Native apontando para o caminho `file://` retornado.
+
+## ⏭️ Próximos passos
+
+O projeto cumpriu o objetivo de consolidar conhecimentos, mas tenho planos para evoluí-lo:
+
+1. **Notificações Push:** Implementar lembretes para contas a pagar.
+2. **Categorias Personalizadas:** Permitir que o usuário crie suas próprias categorias com ícones e cores.
+3. **Animações:** Adicionar animações de entrada utilizando `react-native-reanimated` para tornar a interface ainda mais fluida.
+4. **Login Social:** Adicionar login com Google/Apple.
