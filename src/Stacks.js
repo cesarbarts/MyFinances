@@ -6,7 +6,7 @@ import Analisar from "./screens/Analisar"
 
 import { createStackNavigator } from '@react-navigation/stack';
 
-export default function StackTabs() {
+export default function Stacks() {
   const Stack = createStackNavigator();
   return (
     <Stack.Navigator

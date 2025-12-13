@@ -54,7 +54,7 @@ export default function Analisar({ route }) {
           itemId: itemId,
           value: soma,
           valorOriginal: el.data().valor,
-          frontColor: soma < 0 ? '#c74242ff' : '#00A8E8',
+          frontColor: soma < 0 ? '#FFA552' : '#64E9EE',
           label: el.data().nome,
         });
         ++itemId;
@@ -71,7 +71,7 @@ export default function Analisar({ route }) {
           style={[
             {
               flex: 1,
-              backgroundColor: '#00A8E8',
+              backgroundColor: '#64E9EE',
               justifyContent: 'flex-end',
               padding: 20,
             },
@@ -79,7 +79,7 @@ export default function Analisar({ route }) {
         >
           <Text style={estilos.firstLabel}>Evolução do</Text>
           <Text numberOfLines={1} style={estilos.firstText}>
-            seu dinheiro
+            Seu Dinheiro Hoje
           </Text>
         </View>
       </View>
@@ -93,17 +93,18 @@ export default function Analisar({ route }) {
                 flexDirection: 'row',
                 alignItems: 'center',
                 gap: 2,
-                backgroundColor: '#00345900',
+                backgroundColor: '#093A3E00',
               },
             ]}
           >
-            <Feather name="eye" size={18} color="#00A8E8"></Feather>
+            <Feather name="eye" size={18} color="#64E9EE"></Feather>
+            
             <Text style={[estilos.btnText, estilos.texto18]}>
-              Selecione um para ver detalhes
+              {dados.length > 0 ? "Selecione um para ver detalhes" : "Sem dados hoje."}
             </Text>
           </View>
         </View>
-        <View style={{backgroundColor: "#003459", overflow: "hidden", padding: 20, borderRadius: 20}}>
+        <View style={{backgroundColor: "#093A3E", overflow: "hidden", padding: 20, borderRadius: 20}}>
             <BarChart
           barWidth={50}
           barBorderRadius={4}
@@ -131,7 +132,7 @@ export default function Analisar({ route }) {
           >
             <Feather name="share" size={18} color="#fff"></Feather>
             <Text style={[estilos.texto18, { color: '#fff' }]}>
-              Exportar dados
+              Exportar dados como PDF
             </Text>
           </View>
         </TouchableOpacity>
@@ -154,9 +155,14 @@ export default function Analisar({ route }) {
             onPress={() => setModal(false)}
             style={{ flex: 0.5 }}
           >
-            <View style={{ backgroundColor: '#00345900', flex: 1 }}></View>
+            <View style={{ backgroundColor: '#093A3E00', flex: 1 }}></View>
           </TouchableOpacity>
           <View style={estilos.modalText}>
+            
+            <Text style={[estilos.btnText, estilos.texto18, {marginBottom: 20}]}>
+              
+            <Feather name="zap" size={18} color="#64E9EE"></Feather> ANÁLISE
+            </Text>
             <Text style={estilos.rotulo}>
               {itemSelec.itemId === 0
                 ? 'Você começou o dia '
@@ -165,7 +171,7 @@ export default function Analisar({ route }) {
                 style={{
                   fontWeight: 'bold',
                   color:
-                    itemSelec.valorOriginal < 0 ? '#c74242ff' : '#00A8E8',
+                    itemSelec.valorOriginal < 0 ? '#FFA552' : '#64E9EE',
                 }}
               >
                 {itemSelec.valorOriginal < 0 ? 'perdendo ' : 'ganhando '}
@@ -215,39 +221,39 @@ const estilos = StyleSheet.create({
     flex: 0.3,
   },
   second: {
-    backgroundColor: '#00171F',
+    backgroundColor: '#001011',
     flex: 0.7,
     justifyContent: "flex-start",
     gap: 20,
     padding: 20
   },
   firstText: {
-    color: '#fff',
+    color: '#001011',
     fontSize: 32,
     fontWeight: 'bold',
   },
   firstLabel: {
-    color: '#ffffff',
+    color: '#001011',
     textTransform: 'uppercase',
   },
   texto18: {
     fontSize: 18,
   },
   btnBack: {
-    backgroundColor: '#003459',
+    backgroundColor: '#093A3E',
   },
   btnText: {
-    color: '#00A8E8',
+    color: '#64E9EE',
     fontWeight: 'bold',
     textTransform: 'uppercase',
   },
   selecao: {
     padding: 20,
-    backgroundColor: '#00A8E8',
+    backgroundColor: '#64E9EE',
     borderRadius: 20,
   },
   btnSubmit: {
-    backgroundColor: '#007EA7',
+    backgroundColor: '#A6C36F',
   },
 
   rotulo: {
@@ -255,7 +261,7 @@ const estilos = StyleSheet.create({
     color: '#ffffff',
   },
   modalText: {
-    backgroundColor: '#003459',
+    backgroundColor: '#093A3E',
     flex: 0.25,
     borderRadius: 20,
     marginHorizontal: 10,

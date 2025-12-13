@@ -6,7 +6,7 @@ import EntrarView from './src/screens/Entrar';
 import About from './src/screens/About';
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import StackTabs from './src/StackTabs';
+import Stacks from './src/Stacks';
 import Feather from '@react-native-vector-icons/feather';
 export default function App() {
   const [loading, setLoading] = useState(true);
@@ -45,8 +45,8 @@ export default function App() {
           screenOptions={{
             headerShown: false,
             tabBarShowLabel: true,
-            tabBarActiveTintColor: '#00A8E8',
-            tabBarStyle: { backgroundColor: '#00171F', borderTopWidth: 0 },
+            tabBarActiveTintColor: '#64E9EE',
+            tabBarStyle: { backgroundColor: '#001011', borderTopWidth: 0 },
           }}
         >
           <Tabs.Screen
@@ -56,7 +56,7 @@ export default function App() {
               ),
             }}
             name="Finanças"
-            component={StackTabs}
+            component={Stacks}
           />
          
           <Tabs.Screen
@@ -65,7 +65,7 @@ export default function App() {
                 <Feather name="user" size={size} color={color}></Feather>
               ),
             }}
-            name="Meu perfil"
+            name="Sobre"
             component={About}
           />
         </Tabs.Navigator>
@@ -87,12 +87,14 @@ export default function App() {
 const estilos = StyleSheet.create({
   geral: {
     flex: 1,
+    backgroundColor: '#001011',
   },
   first: {
     flex: 0.3,
+    backgroundColor: '#001011',
   },
   second: {
-    backgroundColor: '#00171F',
+    backgroundColor: '#001011',
     flex: 0.7,
     paddingTop: 20,
   },
@@ -113,7 +115,7 @@ const estilos = StyleSheet.create({
     margin: 20,
   },
   btnText: {
-    color: '#00A8E8',
+    color: '#64E9EE',
     fontWeight: 'bold',
     textTransform: 'uppercase',
   },

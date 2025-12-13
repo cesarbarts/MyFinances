@@ -21,11 +21,11 @@ export default function CardTransacao({ itemRecebido, idItem }) {
               estilos.firstText,
               {
                 color:
-                  Number(itemRecebido.valor) > 0 ? '#00A8E8' : '#c74242ff',
+                  Number(itemRecebido.valor) > 0 ? '#64E9EE' : '#FFA552',
               },
             ]}
           >
-            {Number(itemRecebido.valor) > 0 ? '' : '-'}R$
+            {Number(itemRecebido.valor) > 0 ? '+' : '-'}R$
             {Math.abs(Number(itemRecebido.valor)).toFixed(2).replace('.', ',')}
           </Text>
         </View>
@@ -36,7 +36,7 @@ export default function CardTransacao({ itemRecebido, idItem }) {
 
 const estilos = StyleSheet.create({
   innerValor: {
-    backgroundColor: '#003459',
+    backgroundColor: '#093A3E',
     padding: 20,
     marginBottom: 10,
     flex: 1,
@@ -45,10 +45,10 @@ const estilos = StyleSheet.create({
     justifyContent: 'space-between',
     borderRadius: 20,
   },
-  valor: { },
   firstText: {
     fontSize: 18,
     textAlign: 'right',
+    fontWeight: 500
   },
   rotulo: {
     fontSize: 16,

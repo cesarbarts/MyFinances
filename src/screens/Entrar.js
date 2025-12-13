@@ -8,13 +8,43 @@ import {
   StyleSheet,
   Alert,
   KeyboardAvoidingView,
+  Image
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
+
+import notifee, { AndroidImportance, AuthorizationStatus } from '@notifee/react-native';
+
 import { useFocusEffect } from '@react-navigation/native';
 export default function EntrarView({ funcaoSetUser }) {
   const [email, setEmail] = useState();
 
   const [senha, setSenha] = useState();
+
+  async function boasVindas() {
+    const verificar = await notifee.requestPermission();
+    if (verificar.authorizationStatus === AuthorizationStatus.AUTHORIZED) {
+
+        const channelId = await notifee.createChannel({
+            id: "1",
+            name: "Boas Vindas ao MyDailyFinances",
+            importance: AndroidImportance.HIGH,
+            vibration: true,
+            pressAction: {
+                id: '1',
+                },
+            
+        })
+
+        await notifee.displayNotification({
+            id: "1",
+            title: "Saudações! 🤑",
+            body: "Boas vindas ao MyDailyFinances.",
+            android: { channelId, largeIcon: require("../MyDailyFinances.jpg") }
+        })
+
+
+    }
+  }
 
   useFocusEffect(
     useCallback(() => {
@@ -30,7 +60,7 @@ export default function EntrarView({ funcaoSetUser }) {
       auth()
         .signInWithEmailAndPassword(email, senha)
         .then(userCredential => {
-          Alert.alert('Olá!', 'Saudações ao MyFinances');
+          boasVindas();
           funcaoSetUser(userCredential.user);
         })
         .catch(error => {
@@ -46,7 +76,7 @@ export default function EntrarView({ funcaoSetUser }) {
       auth()
         .createUserWithEmailAndPassword(email, senha)
         .then(userCredential => {
-          Alert.alert('Olá!', 'Saudações ao MyFinances');
+          boasVindas();
           funcaoSetUser(userCredential.user);
         })
         .catch(error => {
@@ -60,7 +90,8 @@ export default function EntrarView({ funcaoSetUser }) {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={estilos.main}
     >
-      <Text style={estilos.titulo}>MyFinances</Text>
+        <Image style={{width: 100, height: 100, borderRadius: 1000}} source={require("../MyDailyFinances.jpg")}></Image>
+      <Text style={estilos.titulo}>MyDailyFinances</Text>
 
       <View style={estilos.editingField}>
         <Text style={estilos.rotulo}>E-mail</Text>
@@ -87,7 +118,7 @@ export default function EntrarView({ funcaoSetUser }) {
         </TouchableOpacity>
         <TouchableOpacity disabled={false} onPress={cadastrar}>
           <View style={estilos.naoselecao}>
-            <Text style={[estilos.texto18]}>Cadastrar</Text>
+            <Text style={[estilos.texto18]}>Cadastrar grátis</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -101,14 +132,14 @@ const estilos = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     gap: 20,
-    backgroundColor: '#00171F',
+    backgroundColor: '#001011',
   },
   editingField: {
     width: '100%',
     paddingHorizontal: 20,
   },
   entrada: {
-    backgroundColor: '#003459',
+    backgroundColor: '#093A3E',
     padding: 20,
     borderRadius: 20,
     color: '#ffffff',
@@ -117,7 +148,7 @@ const estilos = StyleSheet.create({
   },
   selecao: {
     padding: 20,
-    backgroundColor: '#00A8E8',
+    backgroundColor: '#64E9EE',
     borderRadius: 20,
   },
   texto18: {
@@ -138,7 +169,7 @@ const estilos = StyleSheet.create({
   },
   btnBack: {
     padding: 20,
-    backgroundColor: '#003459',
+    backgroundColor: '#093A3E',
     borderRadius: 20,
   },
   btnText: {

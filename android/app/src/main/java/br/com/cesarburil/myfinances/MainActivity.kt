@@ -1,4 +1,4 @@
-package com.myfinances
+package br.com.cesarburil.myfinances
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate

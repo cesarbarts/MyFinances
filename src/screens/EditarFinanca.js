@@ -13,8 +13,13 @@ import { useNavigation } from '@react-navigation/native';
 import { useLayoutEffect } from 'react';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
+import LottieView from 'lottie-react-native';
+
 export default function EditarFinancasView({ route }) {
   const navegacao = useNavigation();
+
+  const [loading, setLoading] = useState();
+
   const { itemSelecionado, idItem } = route.params;
   const [valor, setValor] = useState(
     Math.abs(itemSelecionado ? itemSelecionado.valor : ''),
@@ -29,10 +34,11 @@ export default function EditarFinancasView({ route }) {
   }, [itemSelecionado]);
 
   function acao() {
-    if (valor !== '' && nome !== '') {
+    if ((valor !== '' && valor !== 0) && nome !== '') {
+        setLoading(true)
       itemSelecionado ? editar() : cadastrar();
     } else {
-      Alert.alert('Erro', 'Valor e título precisam ser preenchidos.');
+      Alert.alert('Erro', 'Valor não pode ser zero e título precisa ser preenchido.');
     }
   }
 
@@ -45,7 +51,8 @@ export default function EditarFinancasView({ route }) {
         nome: nome,
       })
       .then(() => {
-        navegacao.goBack();
+        navegacao.goBack(); 
+        setLoading(false)
       });
   }
 
@@ -58,10 +65,21 @@ export default function EditarFinancasView({ route }) {
         data: Date.now(),
         idUser: auth().currentUser.uid,
       })
-      .then(() => navegacao.goBack());
+      .then(() => {setTimeout(()=>{
+
+        setLoading(false)
+
+        navegacao.goBack();
+      }, 1000);
+      }).catch((error)=>Alert.alert(error));
   }
 
-  return (
+  if (loading) {
+    return(<View style={estilos.main}>
+        <LottieView style={{width: 300, height: 300}} source={require('../loadingMyFinances.json')} autoPlay loop />
+    </View>)
+  } else {
+    return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={estilos.main}
@@ -74,7 +92,7 @@ export default function EditarFinancasView({ route }) {
           ]}
         >
           <Feather name="arrow-left" size={18} ></Feather>
-          <Text style={[estilos.btnText, estilos.texto18]}>
+          <Text style={[estilos.btnText2, estilos.texto18]}>
             Voltar
           </Text>
         </View>
@@ -84,7 +102,7 @@ export default function EditarFinancasView({ route }) {
         {itemSelecionado
           ? 'Última edição em ' +
             new Date(itemSelecionado.data).toLocaleDateString()
-          : 'Nova finança'}
+          : 'Nova finança para hoje'}
       </Text>
 
       <View style={estilos.editingField}>
@@ -154,8 +172,12 @@ export default function EditarFinancasView({ route }) {
           </Text>
         </View>
       </TouchableOpacity>
+      
     </KeyboardAvoidingView>
   );
+  }
+
+  
 }
 
 const estilos = StyleSheet.create({
@@ -164,14 +186,14 @@ const estilos = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     gap: 20,
-    backgroundColor: '#00171F', //FundoClaro
+    backgroundColor: '#001011', //FundoClaro
     padding: 20
   },
   editingField: {
     width: '100%',
   },
   entrada: {
-    backgroundColor: '#003459',
+    backgroundColor: '#093A3E',
     padding: 20,
     borderRadius: 20,
     color: '#ffffff',
@@ -179,11 +201,11 @@ const estilos = StyleSheet.create({
   },
   selecao: {
     padding: 20,
-    backgroundColor: '#00A8E8', //Verde
+    backgroundColor: '#64E9EE', //Verde
     borderRadius: 20,
   },
   btnSubmit: {
-    backgroundColor: '#007EA7', //Azul
+    backgroundColor: '#A6C36F', //Azul
   },
   texto18: {
     fontSize: 18,
@@ -205,8 +227,11 @@ const estilos = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     borderRadius: 20,
   },
+  btnText2: {
+    color: '#093A3E',
+  },
   btnText: {
-    color: '#003459',
+    color: '#FFF',
   },
   titulo: {
     fontSize: 28,

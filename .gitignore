@@ -75,3 +75,12 @@ yarn-error.log
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+gradle.properties
+/gradle.properties
+
+.gradle/
+build/
+
+
+android/gradle.properties
+android/gradle.properties.local
